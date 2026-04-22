@@ -1,0 +1,25 @@
+{
+  "name": "mongoose-mongodb",
+  "version": "1.0.0",
+  "description": "set up your own MongoDB database",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SonalMahe/Mongoose-mongoDB.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/SonalMahe/Mongoose-mongoDB/issues"
+  },
+  "homepage": "https://github.com/SonalMahe/Mongoose-mongoDB#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongoose": "^9.5.0"
+  }
+}
