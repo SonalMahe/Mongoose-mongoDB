@@ -5,7 +5,9 @@ const app = express();
 app.use(express.json());
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/mynewdatabase');
+mongoose.connect('mongodb://localhost:27017/mydatabase')
+.then(() => console.log('Connected to MongoDB'))
+.catch(err => console.error('Could not connect to MongoDB', err));
 
 const itemSchema = new mongoose.Schema({
   name: String,
@@ -25,7 +27,7 @@ app.get('/items', async (req, res) => {
     const items = await Item.find();
     res.json(items);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: "failed to fetch items" });
   }
 });
 
@@ -43,30 +45,43 @@ app.post('/items', async (req, res) => {
     const newItem = await item.save();
     res.status(201).json(newItem);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).json({ message: "failed to create item" });
   }
 });
 
 
 //update an item
 app.put('/items/:id', async (req, res) => {
-  const{id} = req.params;
-  const updateddata = req.body;
-  const updateditem = await Item.findByIdAndUpdate(id, req.body, { new: true });
-  res.json(updateditem);
-});
-if (!updateditem) {
-    return res.status(404).json({ message: 'Item not found' });
+  try {
+    const { id } = req.params;
+
+    const updateditem = await Item.findByIdAndUpdate(id, req.body, { new: true });
+
+    if (!updateditem) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+
+    res.json(updateditem);
+
+  } catch (err) {
+    res.status(400).json({ message: "failed to update item" });
   }
+});
+
+
 
 // delete an item
 app.delete('/items/:id', async (req, res) => {
+    try{
   const { id } = req.params;
   const deletedItem = await Item.findByIdAndDelete(id);
   if (!deletedItem) {
     return res.status(404).json({ message: 'Item not found' });
   }
   res.json({ message: 'Item deleted successfully', item: deletedItem });
+} catch (err) {
+    res.status(400).json({ message: "failed to delete item" });
+}
 });
 
 
