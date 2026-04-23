@@ -19,13 +19,13 @@ const Item = mongoose.model('Item', itemSchema);
 
 // fetch all items
 app.get('/login', (req, res) => {
-  res.send('Hello World, this is my first mongoose app!');
+  res.status(200).json('Hello World, this is my first mongoose app!');
 });
 
 app.get('/items', async (req, res) => {
   try {
     const items = await Item.find();
-    res.json(items);
+    res.status(200).json(items);
   } catch (err) {
     res.status(500).json({ message: "failed to fetch items" });
   }
@@ -86,6 +86,6 @@ app.delete('/items/:id', async (req, res) => {
 
 
 
-app.listen(5000, () => {
-  console.log('Server is running on port 5000');
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
 }); 
